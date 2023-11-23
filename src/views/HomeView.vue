@@ -3,13 +3,14 @@ import { RouterView, RouterLink } from "vue-router";
 import InputSearch from "@/components/InputSearch.vue";
 import ProfileCard from "@/components/ProfileCard.vue";
 import ChatItem from "@/components/ChatItem.vue";
-import { ref, reactive } from "vue";
+import { ref } from "vue";
 import useProfileStore from "@/stores/profile.js";
+import useChannelStore from "@/stores/channels.js";
 
 const profileStore = useProfileStore();
+const channelsStore = useChannelStore();
 
 const search = ref("");
-const channels = reactive([]);
 </script>
 
 <template>
@@ -26,7 +27,7 @@ const channels = reactive([]);
       /></RouterLink>
       <div class="channels">
         <ChatItem
-          v-for="channel in channels"
+          v-for="channel in channelsStore.getChannels(search)"
           :key="channel.id"
           :id="channel.id"
           :name="channel.name"
